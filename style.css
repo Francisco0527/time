@@ -1,0 +1,208 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.slider {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+.story {
+  height: 100vh;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  scroll-snap-align: start;
+  background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+  text-align: center;
+  padding: 2rem;
+}
+
+.story h1 {
+  color: #d6336c;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.story p {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  max-width: 650px;
+  color: #d6336c;
+}
+
+.story p small {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.8rem;
+  color: #d6336c;
+  font-weight: 500;
+}
+
+/* Primeira tela mais elegante */
+.first-story {
+  background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+}
+
+.fade-text {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.second-story {
+  background: black; /* fundo neutro para destacar a foto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full-photo {
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+/* ======= ESTILO DO CONTADOR ======= */
+.counter-story {
+  background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+  color: #333;
+}
+
+.counter-story h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #d6336c;
+}
+
+#contador {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.time-box {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  min-width: 90px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.time-box:hover {
+  transform: scale(1.05);
+}
+
+.time-box span {
+  font-size: 2em;
+  font-weight: bold;
+  color: #d6336c;
+  display: block;
+}
+
+.time-box small {
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* Capítulos com fundo preto */
+.chapter-story {
+  background: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.chapter-photo {
+  max-width: 90%;
+  max-height: 50vh;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+.chapter-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  opacity: 0; /* fade-in inicial */
+}
+
+.chapter-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 600px;
+  opacity: 0; /* fade-in inicial */
+}
+
+/* Efeito fade-in */
+.fade-in {
+  animation: fadeInUp 1s forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Carrossel */
+.carousel {
+  width: 90%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  -webkit-overflow-scrolling: touch; /* suaviza no iOS */
+}
+
+.carousel-track {
+  display: flex;
+}
+
+.carousel-photo {
+  flex: 0 0 auto;
+  width: 80%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  scroll-snap-align: start;
+  transition: transform 0.3s;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+.carousel-photo:hover {
+  transform: scale(1.05);
+}
