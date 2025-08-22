@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nossa História</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="slider" id="slider">
+
+    <!-- Primeira história -->
+    <section class="story first-story">
+      <p id="story-text" class="fade-text">
+        <small>10 de setembro de 2016</small><br>
+        Alguns momentos mudam nossa vida para sempre, onde já diante de um altar prometemos ser um pelo outro.
+      </p>
+    </section>
+
+    <!-- Segunda história (foto + música) -->
+    <section class="story second-story">
+      <img src="assets/photo01.jpg" alt="Primeira Viagem" class="full-photo">
+      <audio id="bg-music" preload="auto" loop>
+        <source src="assets/better-together.mp3" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+      </audio>
+    </section>
+
+    <!-- Terceira história (contador) -->
+    <section class="story counter-story">
+      <h1>Uma jornada de amor e momentos juntos inesquecíveis</h1>
+      <p>Estamos juntos há...</p>
+      <div id="contador">
+        <div class="time-box"><span id="dias">0</span><small>Dias</small></div>
+        <div class="time-box"><span id="horas">0</span><small>Horas</small></div>
+        <div class="time-box"><span id="minutos">0</span><small>Minutos</small></div>
+        <div class="time-box"><span id="segundos">0</span><small>Segundos</small></div>
+      </div>
+      <p>Já demos 8 voltas no Sol</p>
+    </section>
+
+    <!-- Quarta história (dia do começo) -->
+    <section class="story counter-story">
+      <h1>Tudo começou em um casamento....</h1>
+      <p>Estavamos ambos em uma celebração cada um nem imaginava a existencia do outro, embora o destino quase tenha feito o encontro antes ele quis que fosse em um casamento, e um buquê mudou tudo para nós.</p>
+    </section>
+
+
+    <!-- Capítulo 1 -->
+<section class="story chapter-story">
+  <img src="assets/photo02.jpg" alt="Capítulo 1" class="chapter-photo">
+  <h2 class="chapter-title fade-in">Capítulo 1: Nosso Primeiro Beijo</h2>
+  <p class="chapter-text fade-in">
+    Quantos casais podem dizer que tem seu primeiro beijo registrado em foto como a gente, quantos casais começam a história dessa maneira.
+  </p>
+</section>
+
+<!-- Capítulo 2 -->
+<!-- Capítulo com carrossel -->
+<section class="story chapter-story">
+  <div class="carousel">
+    <div class="carousel-track">
+      <img src="assets/photo02.jpg" alt="Foto 1" class="carousel-photo">
+      <img src="assets/photo02.jpg" alt="Foto 2" class="carousel-photo">
+      <img src="assets/photo02.jpg" alt="Foto 3" class="carousel-photo">
+    </div>
+  </div>
+  <h2 class="chapter-title fade-in">Capítulo 1: Momentos Inesquecíveis</h2>
+  <p class="chapter-text fade-in">
+    Cada detalhe daquele dia ficou marcado em nossas memórias. Desde o sorriso até o olhar, tudo parecia perfeito e inesquecível.
+  </p>
+</section>
+
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
