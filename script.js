@@ -2,6 +2,53 @@ const slider = document.getElementById('slider');
 let startY = 0;
 let endY = 0;
 
+const slider = document.getElementById('slider');
+const sections = document.querySelectorAll('.story');
+let currentIndex = 0;
+let isScrolling = false;
+
+function scrollToSection(index) {
+  if (isScrolling) return;
+  if (index < 0) index = 0;
+  if (index >= sections.length) index = sections.length - 1;
+
+  isScrolling = true;
+  sections[index].scrollIntoView({ behavior: 'smooth' });
+
+  setTimeout(() => {
+    isScrolling = false;
+    currentIndex = index;
+  }, 700); // duração aproximada do scroll
+}
+
+// Swipe no celular
+let startY = 0;
+let endY = 0;
+
+slider.addEventListener('touchstart', e => {
+  startY = e.touches[0].clientY;
+});
+
+slider.addEventListener('touchend', e => {
+  endY = e.changedTouches[0].clientY;
+  const diff = startY - endY;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) {
+      scrollToSection(currentIndex + 1);
+    } else {
+      scrollToSection(currentIndex - 1);
+    }
+  }
+});
+
+// Scroll com mouse (opcional)
+window.addEventListener('wheel', e => {
+  if (isScrolling) return;
+  if (e.deltaY > 0) scrollToSection(currentIndex + 1);
+  else scrollToSection(currentIndex - 1);
+});
+
+
 // Swipe no celular
 slider.addEventListener('touchstart', (e) => {
   startY = e.touches[0].clientY;
