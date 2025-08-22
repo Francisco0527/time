@@ -55,6 +55,15 @@ body, html {
   font-weight: 500;
 }
 
+/* Estilização apenas para a parte dos capítulos */
+.chapter-story h2 {
+  color: #d6336c;   /* título em vermelho */
+}
+
+.chapter-story p {
+  color: white; /* texto em branco */
+}
+
 /* Primeira tela */
 .first-story {
   background: linear-gradient(135deg, #fff0f5, #ffe4e1);
