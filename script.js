@@ -1,29 +1,57 @@
+// =============================
+// Fix do 100vh em mobile (para CSS usar --vh)
+// =============================
+function setVh() {
+  document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+}
+window.addEventListener('resize', setVh);
+window.addEventListener('load', setVh);
+setVh();
+
+// =============================
+// Elementos principais
+// =============================
 const slider = document.getElementById('slider');
+const music  = document.getElementById('bg-music');
+const secondStory = document.querySelector('.second-story');
+
 let startY = 0;
 let endY = 0;
+let startIndex = 0;
+let musicStarted = false;
+
+function getPageIndex() {
+  // cada "página" ocupa a altura visível do slider
+  return Math.round(slider.scrollTop / slider.clientHeight);
+}
 
 // =============================
 // Swipe no celular (navegação entre seções)
 // =============================
 slider.addEventListener('touchstart', (e) => {
   startY = e.touches[0].clientY;
+  startIndex = getPageIndex();
 });
 
 slider.addEventListener('touchend', (e) => {
   endY = e.changedTouches[0].clientY;
-  handleSwipe();
-});
+  const diff = startY - endY;
 
-function handleSwipe() {
-  let diff = startY - endY;
   if (Math.abs(diff) > 50) {
+    // rola uma página por vez (mantendo seu comportamento atual)
     if (diff > 0) {
       slider.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+
+      // IMPORTANTE: se estava na primeira (0) e foi para baixo (→ segunda),
+      // tentamos iniciar a música DENTRO do gesto do usuário (touchend)
+      if (startIndex === 0 && !musicStarted) {
+        tryStartMusic(true);
+      }
     } else {
       slider.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
     }
   }
-}
+});
 
 // =============================
 // Texto rotativo na primeira tela
@@ -49,32 +77,56 @@ setInterval(() => {
 
 // =============================
 // Música: inicia ao chegar na 2ª tela e segue tocando
+// - 1) Via scroll (desktop / quando permitido)
+// - 2) Via toque (mobile) dentro do gesto (touchend) — confiável
+// - 3) Fallback: primeiro clique/tap em qualquer lugar
 // =============================
-const music = document.getElementById("bg-music");
-let musicStarted = false;
+function isSecondVisible() {
+  const rect = secondStory.getBoundingClientRect();
+  return rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.4;
+}
 
-slider.addEventListener("scroll", () => {
-  if (!musicStarted) {
-    const secondStory = document.querySelector(".second-story");
-    const rect = secondStory.getBoundingClientRect();
-
-    if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-      music.play().then(() => {
-        musicStarted = true; // marca que já iniciou
-      }).catch(() => {
-        console.log("Autoplay bloqueado, aguardando interação...");
+function tryStartMusic(fromUserGesture = false) {
+  if (musicStarted) return;
+  // alguns navegadores só permitem play() dentro de gesto do usuário
+  try {
+    const maybePromise = music.play();
+    // se play() retorna Promise, tratamos resultado
+    if (maybePromise && typeof maybePromise.then === 'function') {
+      maybePromise.then(() => {
+        musicStarted = true;
+      }).catch((err) => {
+        // se não foi gesto do usuário, vai falhar; deixamos fallback assumir
+        if (fromUserGesture) {
+          // em alguns casos raros ainda pode falhar; não marcamos como started
+          console.log('Não foi possível iniciar a música agora:', err);
+        }
       });
+    } else {
+      // alguns browsers antigos não retornam Promise
+      musicStarted = true;
     }
+  } catch (e) {
+    if (fromUserGesture) {
+      console.log('Falha ao iniciar a música dentro do gesto:', e);
+    }
+  }
+}
+
+// 1) Tenta iniciar quando a 2ª história fica visível (desktop ou quando permitido)
+slider.addEventListener('scroll', () => {
+  if (!musicStarted && isSecondVisible()) {
+    tryStartMusic(false);
   }
 });
 
-// Fallback: se autoplay for bloqueado, libera ao primeiro clique/toque
-document.addEventListener("click", () => {
-  if (!musicStarted) {
-    music.play().then(() => {
-      musicStarted = true;
-    });
-  }
+// 3) Fallback geral: primeiro clique/toque em qualquer lugar
+document.addEventListener('click', () => {
+  if (!musicStarted) tryStartMusic(true);
+}, { once: true });
+
+document.addEventListener('touchstart', () => {
+  if (!musicStarted) tryStartMusic(true);
 }, { once: true });
 
 // =============================
@@ -95,8 +147,6 @@ function atualizarContador() {
   document.getElementById("minutos").textContent = minutos;
   document.getElementById("segundos").textContent = segundos;
 }
-
-// Atualiza a cada segundo
 setInterval(atualizarContador, 1000);
 atualizarContador();
 
@@ -116,12 +166,11 @@ function verificarCapitulos() {
     }
   });
 }
-
 window.addEventListener('scroll', verificarCapitulos);
 window.addEventListener('load', verificarCapitulos);
 
 // =============================
-// Carrossel: arrastar com mouse/touch
+// Carrossel: arrastar com mouse/touch (como estava)
 // =============================
 const carousels = document.querySelectorAll('.carousel');
 
@@ -136,17 +185,14 @@ carousels.forEach(carousel => {
     startX = e.pageX - carousel.offsetLeft;
     scrollLeft = carousel.scrollLeft;
   });
-
   carousel.addEventListener('mouseleave', () => {
     isDown = false;
     carousel.classList.remove('active');
   });
-
   carousel.addEventListener('mouseup', () => {
     isDown = false;
     carousel.classList.remove('active');
   });
-
   carousel.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
@@ -155,7 +201,7 @@ carousels.forEach(carousel => {
     carousel.scrollLeft = scrollLeft - walk;
   });
 
-  // Para touch devices
+  // Touch
   let touchStartX = 0;
   let touchScrollLeft = 0;
 
