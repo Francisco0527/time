@@ -2,8 +2,9 @@ const slider = document.getElementById('slider');
 let startY = 0;
 let endY = 0;
 
-
-// Swipe no celular
+// =============================
+// Swipe no celular (navegação entre seções)
+// =============================
 slider.addEventListener('touchstart', (e) => {
   startY = e.touches[0].clientY;
 });
@@ -57,15 +58,24 @@ slider.addEventListener("scroll", () => {
     const secondStory = document.querySelector(".second-story");
     const rect = secondStory.getBoundingClientRect();
 
-    // Quando a segunda tela ficar visível pela primeira vez → inicia música
     if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-      music.play().catch(() => {
-        console.log("Clique na tela para liberar a música (autoplay bloqueado).");
+      music.play().then(() => {
+        musicStarted = true; // marca que já iniciou
+      }).catch(() => {
+        console.log("Autoplay bloqueado, aguardando interação...");
       });
-      musicStarted = false; // garante que só inicia uma vez
     }
   }
 });
+
+// Fallback: se autoplay for bloqueado, libera ao primeiro clique/toque
+document.addEventListener("click", () => {
+  if (!musicStarted) {
+    music.play().then(() => {
+      musicStarted = true;
+    });
+  }
+}, { once: true });
 
 // =============================
 // Contador desde 10/09/2016
@@ -90,7 +100,9 @@ function atualizarContador() {
 setInterval(atualizarContador, 1000);
 atualizarContador();
 
-// Função para ativar fade-in quando o capítulo entra na tela
+// =============================
+// Fade-in dos capítulos
+// =============================
 function verificarCapitulos() {
   const capitulos = document.querySelectorAll('.chapter-story');
 
@@ -107,7 +119,10 @@ function verificarCapitulos() {
 
 window.addEventListener('scroll', verificarCapitulos);
 window.addEventListener('load', verificarCapitulos);
+
+// =============================
 // Carrossel: arrastar com mouse/touch
+// =============================
 const carousels = document.querySelectorAll('.carousel');
 
 carousels.forEach(carousel => {
@@ -121,14 +136,17 @@ carousels.forEach(carousel => {
     startX = e.pageX - carousel.offsetLeft;
     scrollLeft = carousel.scrollLeft;
   });
+
   carousel.addEventListener('mouseleave', () => {
     isDown = false;
     carousel.classList.remove('active');
   });
+
   carousel.addEventListener('mouseup', () => {
     isDown = false;
     carousel.classList.remove('active');
   });
+
   carousel.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
