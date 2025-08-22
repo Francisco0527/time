@@ -60,7 +60,8 @@ const frases = [
   `<small>10 de setembro de 2016</small><br>Alguns momentos mudam nossa vida para sempre, onde já diante de um altar prometemos ser um pelo outro.`,
   `Cada momento ao seu lado é uma eterna memória`,
   `Nossa história é feita de grandes momentos juntos`,
-  `✨ Deslize para ver nossa jornada juntos ✨`
+  `Toque na tela para iniciar a nossa trilha sonora `,
+  `Deslize para ver nossa jornada juntos`
 ];
 
 let indice = 0;
