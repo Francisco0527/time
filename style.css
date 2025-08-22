@@ -21,7 +21,7 @@ body, html {
 }
 
 .story {
-  height: var(--vh, 100vh); /* substitui 100vh por uma variável */
+  height: var(--vh, 100vh); /* fix para mobile */
   width: 100%;
   flex-shrink: 0;
   display: flex;
@@ -33,7 +33,7 @@ body, html {
   padding: 2rem;
 }
 
-
+/* ---------- TEXTO BASE ---------- */
 .story h1 {
   color: #d6336c;
   font-size: 2.2rem;
@@ -55,7 +55,7 @@ body, html {
   font-weight: 500;
 }
 
-/* Primeira tela mais elegante */
+/* Primeira tela */
 .first-story {
   background: linear-gradient(135deg, #fff0f5, #ffe4e1);
 }
@@ -65,8 +65,9 @@ body, html {
   transition: opacity 1s ease-in-out;
 }
 
+/* Foto inteira */
 .second-story {
-  background: black; /* fundo neutro para destacar a foto */
+  background: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,7 +81,7 @@ body, html {
   box-shadow: 0 8px 20px rgba(0,0,0,0.5);
 }
 
-/* ======= ESTILO DO CONTADOR ======= */
+/* ======= CONTADOR ======= */
 .counter-story {
   background: linear-gradient(135deg, #fff0f5, #ffe4e1);
   color: #333;
@@ -126,7 +127,7 @@ body, html {
   color: #555;
 }
 
-/* Capítulos com fundo preto */
+/* Capítulos */
 .chapter-story {
   background: black;
   color: white;
@@ -150,32 +151,27 @@ body, html {
 .chapter-title {
   font-size: 2rem;
   margin-bottom: 1rem;
-  opacity: 0; /* fade-in inicial */
+  opacity: 0;
 }
 
 .chapter-text {
   font-size: 1.2rem;
   line-height: 1.6;
   max-width: 600px;
-  opacity: 0; /* fade-in inicial */
+  opacity: 0;
 }
 
-/* Efeito fade-in */
+/* Fade-in */
 .fade-in {
   animation: fadeInUp 1s forwards;
   animation-delay: 0.5s;
 }
 
 @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
+
 /* Carrossel */
 .carousel {
   width: 90%;
@@ -184,7 +180,7 @@ body, html {
   display: flex;
   gap: 15px;
   margin-bottom: 20px;
-  -webkit-overflow-scrolling: touch; /* suaviza no iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel-track {
@@ -205,4 +201,64 @@ body, html {
 
 .carousel-photo:hover {
   transform: scale(1.05);
+}
+
+/* ===================== */
+/* RESPONSIVIDADE MOBILE */
+/* ===================== */
+@media (max-width: 768px) {
+  .story h1 {
+    font-size: 1.8rem;
+  }
+
+  .story p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+
+  .time-box {
+    padding: 15px;
+    min-width: 70px;
+  }
+
+  .time-box span {
+    font-size: 1.6rem;
+  }
+
+  .chapter-photo {
+    max-width: 95%;
+    max-height: 40vh;
+  }
+
+  .carousel-photo {
+    width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .story {
+    padding: 1.2rem;
+  }
+
+  .story h1 {
+    font-size: 1.5rem;
+  }
+
+  .story p {
+    font-size: 1rem;
+  }
+
+  .time-box {
+    padding: 12px;
+    min-width: 60px;
+  }
+
+  .time-box span {
+    font-size: 1.4rem;
+  }
+
+  .chapter-text {
+    font-size: 1rem;
+  }
 }
