@@ -217,3 +217,80 @@ carousels.forEach(carousel => {
     carousel.scrollLeft = touchScrollLeft - walk;
   });
 });
+// === INDICADOR DE PÁGINAS ===
+const sections = document.querySelectorAll('.story');
+const pageIndicator = document.getElementById('pageIndicator');
+
+// Cria uma bolinha para cada seção
+sections.forEach(() => {
+  const dot = document.createElement('div');
+  pageIndicator.appendChild(dot);
+});
+
+const dots = pageIndicator.querySelectorAll('div');
+
+function atualizarIndicador() {
+  const scrollPos = window.scrollY;
+  const alturaJanela = window.innerHeight;
+
+  sections.forEach((section, index) => {
+    const top = section.offsetTop;
+    const bottom = top + section.offsetHeight;
+
+    if (scrollPos >= top - alturaJanela / 2 && scrollPos < bottom - alturaJanela / 2) {
+      dots.forEach(d => d.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', atualizarIndicador);
+window.addEventListener('load', atualizarIndicador);
+
+document.addEventListener("DOMContentLoaded", () => {
+  const pages = document.querySelectorAll(".story");
+  const lastPage = document.getElementById("last-page");
+  const loveMessage = document.getElementById("love-message");
+
+  function showLoveMessage() {
+    const text = "Eu te amo muito ❤";
+    let i = 0;
+    loveMessage.innerHTML = ""; // garante que começa vazio
+    loveMessage.style.opacity = "1";
+
+    function typeWriter() {
+      if (i < text.length) {
+        loveMessage.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 120); // velocidade da digitação
+      } else {
+        // Fade out depois de 3s
+        setTimeout(() => {
+          loveMessage.style.opacity = "0";
+        }, 3000);
+      }
+    }
+
+    typeWriter();
+  }
+
+  // Função para detectar página ativa
+  function handleScroll() {
+    let index = 0;
+    pages.forEach((page, i) => {
+      const rect = page.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+        index = i;
+      }
+    });
+
+    // Se chegou na última página, dispara animação
+    if (pages[index] === lastPage && loveMessage.innerHTML === "") {
+      showLoveMessage();
+    }
+  }
+
+  // Detecta rolagem
+  window.addEventListener("scroll", handleScroll);
+  handleScroll();
+});
