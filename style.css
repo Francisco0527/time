@@ -212,6 +212,59 @@ body, html {
   transform: scale(1.05);
 }
 
+/* Indicador lateral de páginas */
+.page-indicator {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.page-indicator div {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+}
+
+.page-indicator div.active {
+  background: #d6336c;
+  transform: scale(1.3);
+}
+
+/* Páginas de foto em tela cheia */
+.story.photo-fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black; /* fundo para caso sobrem espaços */
+  overflow: hidden;
+}
+
+.story.photo-fullscreen img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* não corta, sempre mostra a foto inteira */
+}
+
+#love-message {
+  position: absolute;
+  bottom: 15%;
+  width: 100%;
+  text-align: center;
+  font-family: 'Dancing Script', cursive; /* letra romântica */
+  font-size: 2.5rem;
+  color: #ff4d6d;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  pointer-events: none;
+}
+
 /* ===================== */
 /* RESPONSIVIDADE MOBILE */
 /* ===================== */
@@ -245,6 +298,7 @@ body, html {
   }
 }
 
+
 @media (max-width: 480px) {
   .story {
     padding: 1.2rem;
@@ -271,3 +325,4 @@ body, html {
     font-size: 1rem;
   }
 }
+
